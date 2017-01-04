@@ -17,6 +17,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        
+        
+        do{
+            
+            let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+            
+            let fileSavedPath = documents + "/hackerBooksData.json"
+            
+            guard let url = URL(string: "https://t.co/K9ziV0z3SJ") else {
+                
+                throw HackerBooksErrors.jsonParsingError
+                
+            }
+            
+            
+            if(FileManager.default.fileExists(atPath: fileSavedPath) == false){
+                let data = try! Data(contentsOf: url)
+                
+                
+                let documentsPath = URL(fileURLWithPath: documents).appendingPathComponent("hackerBooksData.json")
+                try? data.write(to: documentsPath, options: [])
+            }
+            
+            
+            let documentPath = URL(fileURLWithPath: documents).appendingPathComponent("hackerBooksData.json")
+            let data = try? Data(contentsOf: documentPath)
+            
+            
+            let jsonFile = try loadFromSaveFile(file: data!)
+        
+            
+            for dict in jsonFile{
+                
+                
+                do{
+                    
+                    try parsing(hackerBook: dict)
+                 
+                    
+                } catch{
+                    
+                    print("Error al procesar JSON \(dict)")
+                    
+                    
+                }
+                
+            }
+            
+        } catch {
+            
+            fatalError("Error while loading JSON")
+            
+        }
+        
+        print("por lo menos llegamos hasta aqui")
+        
         return true
     }
 

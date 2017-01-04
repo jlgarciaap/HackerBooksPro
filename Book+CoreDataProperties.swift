@@ -2,7 +2,7 @@
 //  Book+CoreDataProperties.swift
 //  HackerBooksSuperPro
 //
-//  Created by Juan Luis Garcia on 03/01/2017.
+//  Created by Juan Luis Garcia on 4/1/17.
 //  Copyright © 2017 styleapps. All rights reserved.
 //
 
@@ -17,10 +17,27 @@ extension Book {
     }
 
     @NSManaged public var title: String?
-    @NSManaged public var bookTag: NSSet?
+    @NSManaged public var bookAuthor: NSSet?
     @NSManaged public var bookPdf: Pdf?
-    @NSManaged public var bookPhoto: NSSet?
-    @NSManaged public var bookAuthor: Author?
+    @NSManaged public var bookPhoto: Photo?
+    @NSManaged public var bookTag: NSSet?
+
+}
+
+// MARK: Generated accessors for bookAuthor
+extension Book {
+
+    @objc(addBookAuthorObject:)
+    @NSManaged public func addToBookAuthor(_ value: Author)
+
+    @objc(removeBookAuthorObject:)
+    @NSManaged public func removeFromBookAuthor(_ value: Author)
+
+    @objc(addBookAuthor:)
+    @NSManaged public func addToBookAuthor(_ values: NSSet)
+
+    @objc(removeBookAuthor:)
+    @NSManaged public func removeFromBookAuthor(_ values: NSSet)
 
 }
 
@@ -38,22 +55,5 @@ extension Book {
 
     @objc(removeBookTag:)
     @NSManaged public func removeFromBookTag(_ values: NSSet)
-
-}
-
-// MARK: Generated accessors for bookPhoto
-extension Book {
-
-    @objc(addBookPhotoObject:)
-    @NSManaged public func addToBookPhoto(_ value: Photo)
-
-    @objc(removeBookPhotoObject:)
-    @NSManaged public func removeFromBookPhoto(_ value: Photo)
-
-    @objc(addBookPhoto:)
-    @NSManaged public func addToBookPhoto(_ values: NSSet)
-
-    @objc(removeBookPhoto:)
-    @NSManaged public func removeFromBookPhoto(_ values: NSSet)
 
 }
