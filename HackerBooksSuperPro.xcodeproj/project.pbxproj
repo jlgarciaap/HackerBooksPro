@@ -13,6 +13,16 @@
 		F4490EBB1E1C5EAC0002BD45 /* HackerBooksSuperPro.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F4490EB91E1C5EAC0002BD45 /* HackerBooksSuperPro.xcdatamodeld */; };
 		F4490EBD1E1C5EAC0002BD45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4490EBC1E1C5EAC0002BD45 /* Assets.xcassets */; };
 		F4490EC01E1C5EAC0002BD45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4490EBE1E1C5EAC0002BD45 /* LaunchScreen.storyboard */; };
+		F4490ECB1E1C5F1C0002BD45 /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4490EC71E1C5F1C0002BD45 /* Tag+CoreDataClass.swift */; };
+		F4490ECC1E1C5F1C0002BD45 /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4490EC81E1C5F1C0002BD45 /* Tag+CoreDataProperties.swift */; };
+		F4490ECD1E1C5F1C0002BD45 /* Book+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4490EC91E1C5F1C0002BD45 /* Book+CoreDataClass.swift */; };
+		F4490ECE1E1C5F1C0002BD45 /* Book+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4490ECA1E1C5F1C0002BD45 /* Book+CoreDataProperties.swift */; };
+		F4490ED51E1C604A0002BD45 /* Author+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4490ECF1E1C604A0002BD45 /* Author+CoreDataClass.swift */; };
+		F4490ED61E1C604A0002BD45 /* Author+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4490ED01E1C604A0002BD45 /* Author+CoreDataProperties.swift */; };
+		F4490ED71E1C604A0002BD45 /* Pdf+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4490ED11E1C604A0002BD45 /* Pdf+CoreDataClass.swift */; };
+		F4490ED81E1C604A0002BD45 /* Pdf+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4490ED21E1C604A0002BD45 /* Pdf+CoreDataProperties.swift */; };
+		F4490ED91E1C604A0002BD45 /* Photo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4490ED31E1C604A0002BD45 /* Photo+CoreDataClass.swift */; };
+		F4490EDA1E1C604A0002BD45 /* Photo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4490ED41E1C604A0002BD45 /* Photo+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +34,16 @@
 		F4490EBC1E1C5EAC0002BD45 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F4490EBF1E1C5EAC0002BD45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F4490EC11E1C5EAC0002BD45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4490EC71E1C5F1C0002BD45 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F4490EC81E1C5F1C0002BD45 /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F4490EC91E1C5F1C0002BD45 /* Book+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Book+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F4490ECA1E1C5F1C0002BD45 /* Book+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Book+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F4490ECF1E1C604A0002BD45 /* Author+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Author+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F4490ED01E1C604A0002BD45 /* Author+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Author+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F4490ED11E1C604A0002BD45 /* Pdf+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pdf+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F4490ED21E1C604A0002BD45 /* Pdf+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pdf+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F4490ED31E1C604A0002BD45 /* Photo+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F4490ED41E1C604A0002BD45 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +60,16 @@
 		F4490EA61E1C5EAC0002BD45 = {
 			isa = PBXGroup;
 			children = (
+				F4490ECF1E1C604A0002BD45 /* Author+CoreDataClass.swift */,
+				F4490ED01E1C604A0002BD45 /* Author+CoreDataProperties.swift */,
+				F4490ED11E1C604A0002BD45 /* Pdf+CoreDataClass.swift */,
+				F4490ED21E1C604A0002BD45 /* Pdf+CoreDataProperties.swift */,
+				F4490ED31E1C604A0002BD45 /* Photo+CoreDataClass.swift */,
+				F4490ED41E1C604A0002BD45 /* Photo+CoreDataProperties.swift */,
+				F4490EC71E1C5F1C0002BD45 /* Tag+CoreDataClass.swift */,
+				F4490EC81E1C5F1C0002BD45 /* Tag+CoreDataProperties.swift */,
+				F4490EC91E1C5F1C0002BD45 /* Book+CoreDataClass.swift */,
+				F4490ECA1E1C5F1C0002BD45 /* Book+CoreDataProperties.swift */,
 				F4490EB11E1C5EAC0002BD45 /* HackerBooksSuperPro */,
 				F4490EB01E1C5EAC0002BD45 /* Products */,
 			);
@@ -139,8 +169,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4490ED81E1C604A0002BD45 /* Pdf+CoreDataProperties.swift in Sources */,
+				F4490EDA1E1C604A0002BD45 /* Photo+CoreDataProperties.swift in Sources */,
 				F4490EBB1E1C5EAC0002BD45 /* HackerBooksSuperPro.xcdatamodeld in Sources */,
+				F4490ECC1E1C5F1C0002BD45 /* Tag+CoreDataProperties.swift in Sources */,
+				F4490ED61E1C604A0002BD45 /* Author+CoreDataProperties.swift in Sources */,
 				F4490EB51E1C5EAC0002BD45 /* ViewController.swift in Sources */,
+				F4490ECB1E1C5F1C0002BD45 /* Tag+CoreDataClass.swift in Sources */,
+				F4490ED91E1C604A0002BD45 /* Photo+CoreDataClass.swift in Sources */,
+				F4490ED51E1C604A0002BD45 /* Author+CoreDataClass.swift in Sources */,
+				F4490ECD1E1C5F1C0002BD45 /* Book+CoreDataClass.swift in Sources */,
+				F4490ECE1E1C5F1C0002BD45 /* Book+CoreDataProperties.swift in Sources */,
+				F4490ED71E1C604A0002BD45 /* Pdf+CoreDataClass.swift in Sources */,
 				F4490EB31E1C5EAC0002BD45 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
