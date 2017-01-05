@@ -11,9 +11,9 @@ import CoreData
 
 class CoreDataTableViewController: UITableViewController {
     
-    let fecthRequest: NSFetchRequest<Book> = Book.fetchRequest()
+    let fecthRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
 
-    var searchResults: Array<Book> = []
+    var searchResults: Array<Tag> = []
     
     var managedObjectContext: NSManagedObjectContext?
     
@@ -76,20 +76,72 @@ class CoreDataTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of sections
         
         //Poner todo con tag para la secciones
+        if (searchResults.count > 0)
+        {
+            
+            return searchResults.count
+            
+        }
+        
         
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return searchResults.count
+        
+        
+        
+        if searchResults.count > 0 {
+        
+        return (searchResults[section].tagBook?.count)!
+        
+        } else {
+            
+            return 0
+            
+        }
+        
+    
     }
 
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CellID", for: indexPath)
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        
+        if searchResults.count > 0 {
+            
+            return searchResults[section].name
+            
+        } else {
 
-   
+            return ""
+            
+        }
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        
+        let header : UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
+        
+        header.contentView.backgroundColor = UIColor.blue
+        header.textLabel?.textColor = UIColor.white
+        
+        
+    }
+    
+    //Para la celda seleccionada ponemos el tamaño de la celda
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        
+//        return 172.0
+//    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CustomTableViewCell
+
+   /* Cuando es Books
         if (searchResults.count > 0) {
             
             let title = searchResults[indexPath.row].title
@@ -105,15 +157,61 @@ class CoreDataTableViewController: UITableViewController {
                 
             }
             
+ 
+ */
            //let authorArray : Array<String> = authorSet?.allObjects as! Array<String>
             
            // let author:String = "Autor de prueba"//authorArray.joined(separator: ",")
+        
+        
+        if (searchResults.count > 0){
+            
+            let bookSet = searchResults[indexPath.section].tagBook
+            
+            let bookArray = bookSet?.allObjects as! Array<Book>
+            
+            let title = bookArray[indexPath.row].title
+            
+            let tagSet  = bookArray[indexPath.row].bookTag
+            
+            var stringTag : String = ""
+            
+            for tag in tagSet! {
+                
+                stringTag += (tag as! Tag).name! + ","
+                
+                
+            }
+            
+            let bookPhoto:Photo = bookArray[indexPath.row].bookPhoto!
+            
+            let image: UIImage = UIImage(data: bookPhoto.photoData as! Data)!
             
             
-            cell.textLabel?.text = title
-            cell.detailTextLabel?.text = stringTag
             
+            let authorSet  = bookArray[indexPath.row].bookAuthor
+            
+            var stringAuthor : String = ""
+            
+            for author in authorSet! {
+                
+                stringAuthor += (author as! Author).name! + ","
+                
+                
+            }
+
+            
+                
+            cell.titleLabelView?.text = title
+            cell.tagLabelView?.text = stringTag
+            
+            cell.imgView.image = image
+            cell.imgView.contentMode = .scaleAspectFit
+            
+            cell.authorsLabelView?.text = stringAuthor
+
         }
+        
         
         return cell
     }
@@ -158,10 +256,31 @@ class CoreDataTableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
+ */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "showBook" {
+            
+            var indexpath:IndexPath = self.tableView.indexPathForSelectedRow!
+            
+            let bookSet = searchResults[indexpath.section].tagBook
+            
+            let bookArray = bookSet?.allObjects as! Array<Book>
+            
+            let selectedBook: Book = bookArray[indexpath.row]
+            
+            let bookDetail: DetailBookViewController = segue.destination as! DetailBookViewController
+            
+            bookDetail.bookRecieved = selectedBook
+            
+            
+            
+        }
+        
+        
     }
-    */
+ 
 
 }

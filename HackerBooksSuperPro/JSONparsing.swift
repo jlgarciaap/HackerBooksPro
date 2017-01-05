@@ -25,13 +25,16 @@ func parsing (hackerBook json: JSONDictionary) throws -> () {
     let objectContext = miDelegate.persistentContainer.viewContext
     
     
-    let fecthRequest: NSFetchRequest<Book> = Book.fetchRequest()
+    let bookFecthRequest: NSFetchRequest<Book> = Book.fetchRequest()
     
-    var searchResults: Array<Book> = []
+    var searchResultsBook: Array<Book> = []
     
     var managedObjectContext: NSManagedObjectContext?
     
     
+    let tagFetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
+    
+    var searchResultsTag: Array<Tag> = []
     
     let defaults = UserDefaults.standard
     
@@ -45,11 +48,11 @@ func parsing (hackerBook json: JSONDictionary) throws -> () {
     
     let predicado = NSPredicate(format: "title = %@", title)
     
-    fecthRequest.predicate = predicado
-    fecthRequest.fetchLimit = 1
-    searchResults = try objectContext.fetch(fecthRequest)
+    bookFecthRequest.predicate = predicado
+    bookFecthRequest.fetchLimit = 1
+    searchResultsBook = try objectContext.fetch(bookFecthRequest)
     
-    if searchResults.count  < 1 {
+    if searchResultsBook.count  < 1 {
     
     
     let authors = json["authors"] as? String
@@ -93,7 +96,7 @@ func parsing (hackerBook json: JSONDictionary) throws -> () {
     if let tags = json["tags"] as? String {
         
     
-        let tagsArray = tags.components(separatedBy: ",")
+        let tagsArray = tags.components(separatedBy: ", ")
         
         let newBook = NSEntityDescription.insertNewObject(forEntityName: "Book", into: objectContext) as! Book
         let newPdf = NSEntityDescription.insertNewObject(forEntityName: "Pdf", into: objectContext) as! Pdf
@@ -129,9 +132,24 @@ func parsing (hackerBook json: JSONDictionary) throws -> () {
         
         for tag in tagsArray{
             
+            let predicadoTag = NSPredicate(format: "name = %@", tag)
+            
+            tagFetchRequest.predicate = predicadoTag
+            tagFetchRequest.fetchLimit = 1
+            searchResultsTag = try objectContext.fetch(tagFetchRequest)
+            
+            if searchResultsTag.count > 0 {
+                let existTag :Tag = searchResultsTag[0]
+                
+                newBook.addToBookTag(existTag)
+                
+            } else {
+            
             let newTag = NSEntityDescription.insertNewObject(forEntityName: "Tag", into: objectContext) as! Tag
             newTag.name = tag
             newBook.addToBookTag(newTag)
+            
+         }
             
         }
         
