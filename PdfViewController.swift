@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PdfViewController: UIViewController {
+class PdfViewController: UIViewController, UIWebViewDelegate{
     
     var pdfRecieved:NSData!
     
@@ -18,11 +18,11 @@ class PdfViewController: UIViewController {
         
         didSet{
             
-            actViw.startAnimating()
-            
+            pdfView.delegate = self
+        
             self.pdfView.load(pdfRecieved as Data, mimeType: "application/pdf", textEncodingName: "utf-8", baseURL:NSURL().absoluteURL!)
-            
-            actViw.stopAnimating()
+
+          
             
         }
         
@@ -33,6 +33,9 @@ class PdfViewController: UIViewController {
         //Vista por debajo del NavBar
         self.edgesForExtendedLayout = UIRectEdge()
         
+        actViw.startAnimating()
+        
+    
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -43,7 +46,18 @@ class PdfViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: - UIViewDelegate
     
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        //delegado del webView
+        
+        
+        
+        actViw.stopAnimating()
+        actViw.hidesWhenStopped = true
+       
+    }
+
     
     
 

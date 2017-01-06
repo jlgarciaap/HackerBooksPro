@@ -39,5 +39,9 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Solicitando el uso de la camara</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Solicitando el uso de la localizacion</string>
 </dict>
 </plist>

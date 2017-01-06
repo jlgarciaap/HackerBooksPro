@@ -74,8 +74,20 @@ class DetailBookViewController: UIViewController {
                 
                 stringTag += (tag as! Tag).name! + ","
                 
+               
+            }
+            
+            if stringTag.contains("Favorites"){
+                
+                favSwitch.isOn = true
+                
+            } else {
+                
+                favSwitch.isOn = false
                 
             }
+            
+            self.tagsLblView.text = stringTag
             
         }
         
@@ -90,6 +102,14 @@ class DetailBookViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
+        //Estados del Switch
+        favSwitch.addTarget(self, action: #selector(stateChanged), for: UIControlEvents.valueChanged)
+        
+
+        
+        
         // Do any additional setup after loading the view.
     }
 
@@ -98,7 +118,99 @@ class DetailBookViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    func stateChanged(_ switchState: UISwitch){
+        
+        //Mandamos notificacion cuando se marca o desmarca un elemento de favoritos
+        //la recibimos en hackerBooksTableViewController
+        
+       // let nCenter = NotificationCenter.default
+        
+        
+        
+        let miDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let tagFetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
+        
+        var searchResultsTag: Array<Tag> = []
+        
+        let objectContext = miDelegate.persistentContainer.viewContext
+        
+        let predicadoTag = NSPredicate(format: "name = %@", "Favorites")
+        
+        tagFetchRequest.predicate = predicadoTag
+        tagFetchRequest.fetchLimit = 1
+        
+        do{
+        searchResultsTag = try objectContext.fetch(tagFetchRequest)
 
+            }catch (let e as NSError) {
+            
+            print("Error al realizar busqueda de tag. \(e)")
+            
+        }
+        
+        if switchState.isOn{
+            
+         //   let notif = Notification(name: Notification.Name(rawValue: "favChangedOn"), object: self, userInfo: ["key": model])
+            
+           // nCenter.post(notif)
+            
+           // model.tags = model.tags! + ", \(keyFavorites)"
+            
+            if searchResultsTag.count > 0 {
+                let existTag :Tag = searchResultsTag[0]
+                
+                bookRecieved.addToBookTag(existTag)
+                
+            } else {
+                
+                let newTag = NSEntityDescription.insertNewObject(forEntityName: "Tag", into: objectContext) as! Tag
+                newTag.name = "Favorites"
+                bookRecieved.addToBookTag(newTag)
+                
+            }
+            
+            
+            
+            tagsLblView.text = tagsLblView.text! + "Favorites"
+            
+        } else {
+            
+//            let notif = Notification(name: Notification.Name(rawValue: "favChangedOff"), object: self, userInfo: ["key": model])
+//            
+//            nCenter.post(notif)
+//            
+//            model.tags = model.tags?.replacingOccurrences(of: ", \(keyFavorites)", with: "")
+            
+            if searchResultsTag.count > 0 {
+                let existTag :Tag = searchResultsTag[0]
+                
+                bookRecieved.removeFromBookTag(existTag)
+                
+                if (existTag.tagBook?.count)! < 1{
+                    
+                    objectContext.delete(existTag)
+                    
+                    
+                }
+                
+                
+            }
+            
+            
+            tagsLblView.text = tagsLblView.text?.replacingOccurrences(of: "Favorites", with: "")
+            
+            
+        }
+        
+       // syncModelWithView()
+        
+        
+    }
+
+    
+    
     
     // MARK: - Navigation
 

@@ -49,6 +49,8 @@ class CoreDataTableViewController: UITableViewController {
             
            // fecthRequest.predicate = predicado
             
+            fecthRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+            
             searchResults =  try getActualContext().fetch(fecthRequest)
             tableView.reloadData()
         } catch let error as NSError {
@@ -206,7 +208,7 @@ class CoreDataTableViewController: UITableViewController {
             cell.tagLabelView?.text = stringTag
             
             cell.imgView.image = image
-            cell.imgView.contentMode = .scaleAspectFit
+            //cell.imgView.contentMode = .scaleAspectFit
             
             cell.authorsLabelView?.text = stringAuthor
 
