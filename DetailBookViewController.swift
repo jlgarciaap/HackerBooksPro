@@ -108,6 +108,13 @@ class DetailBookViewController: UIViewController {
         favSwitch.addTarget(self, action: #selector(stateChanged), for: UIControlEvents.valueChanged)
         
 
+        let lastBookReadID = bookRecieved.objectID.uriRepresentation()
+        
+        let lastBookRead = NSKeyedArchiver.archivedData(withRootObject: lastBookReadID)
+        
+        
+        UserDefaults.standard.set(lastBookRead, forKey: "lastBookRead")
+        
         
         
         // Do any additional setup after loading the view.
@@ -198,9 +205,6 @@ class DetailBookViewController: UIViewController {
         
     }
 
-    
-    
-    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -214,7 +218,7 @@ class DetailBookViewController: UIViewController {
             //De momento como ya lo tenemos todo lo pasamos
             
         
-            let selectedPDF = bookRecieved.bookPdf?.pdfData
+            let selectedPDF = bookRecieved.bookPdf
             
             let pdfDetail: PdfViewController = segue.destination as! PdfViewController
             

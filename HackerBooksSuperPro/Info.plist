@@ -20,6 +20,21 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Solicitando acceso a Fotos</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Solicitando el uso de la camara</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Solicitando el uso de la localizacion</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Solicitando acceso a Fotos</string>
+	<key>UILaunchImageFile</key>
+	<string>chibiVader</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -34,18 +49,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Solicitando el uso de la camara</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Solicitando el uso de la localizacion</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Solicitando acceso a Fotos</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Solicitando acceso a Fotos</string>
 </dict>
 </plist>

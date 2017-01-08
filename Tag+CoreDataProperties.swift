@@ -2,7 +2,7 @@
 //  Tag+CoreDataProperties.swift
 //  HackerBooksSuperPro
 //
-//  Created by Juan Luis Garcia on 03/01/2017.
+//  Created by Juan Luis Garcia on 8/1/17.
 //  Copyright © 2017 styleapps. All rights reserved.
 //
 

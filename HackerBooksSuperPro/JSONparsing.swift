@@ -29,7 +29,7 @@ func parsing (hackerBook json: JSONDictionary) throws -> () {
     
     var searchResultsBook: Array<Book> = []
     
-    var managedObjectContext: NSManagedObjectContext?
+    //var managedObjectContext: NSManagedObjectContext?
     
     
     let tagFetchRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
@@ -76,59 +76,39 @@ func parsing (hackerBook json: JSONDictionary) throws -> () {
         defaults.set(dataImage, forKey: title)
     }
         
-    guard let imageData = defaults.data(forKey: title) else{
         
-        throw HackerBooksErrors.imageSaveRecoverFailed
+        //let image = UIImage(data: imageData)
         
-    }
-        
-    let image = UIImage(data: imageData)
-    
-    guard let pdfUrl = json["pdf_url"] as? String else {
-        
-        
-        throw HackerBooksErrors.pdfJSONError
-                
-    }
-    
-    
-    
-    if let tags = json["tags"] as? String {
-        
-    
-        let tagsArray = tags.components(separatedBy: ", ")
-        
-        let newBook = NSEntityDescription.insertNewObject(forEntityName: "Book", into: objectContext) as! Book
-        let newPdf = NSEntityDescription.insertNewObject(forEntityName: "Pdf", into: objectContext) as! Pdf
-        let newPhoto = NSEntityDescription.insertNewObject(forEntityName: "Photo", into: objectContext) as! Photo
-        
-        
-        newBook.title = title
-        
-        newPdf.urlPdf = pdfUrl
-        
-        let pdfData = NSData(contentsOf: NSURL(string: pdfUrl) as! URL)
-        
-        if (pdfData != nil){
-        
-         newPdf.pdfData = pdfData
-        
-        
-        } else {
+        guard let pdfUrl = json["pdf_url"] as? String else {
             
-            newPdf.pdfData = NSData(contentsOf: NSURL(string: "http://greenteapress.com/compmod/thinkcomplexity.pdf") as! URL)
             
+            throw HackerBooksErrors.pdfJSONError
             
         }
         
-         newBook.bookPdf = newPdf
-        
-        newPhoto.urlPhoto = photoUrl
-        newPhoto.photoData = imageData as NSData?
-        
-        newBook.bookPhoto = newPhoto
         
         
+        if let tags = json["tags"] as? String {
+            
+            
+            let tagsArray = tags.components(separatedBy: ", ")
+            
+            let newBook = NSEntityDescription.insertNewObject(forEntityName: "Book", into: objectContext) as! Book
+            let newPdf = NSEntityDescription.insertNewObject(forEntityName: "Pdf", into: objectContext) as! Pdf
+            let newPhoto = NSEntityDescription.insertNewObject(forEntityName: "Photo", into: objectContext) as! Photo
+            
+            
+            newBook.title = title
+            
+            newPdf.urlPdf = pdfUrl
+            
+            newBook.bookPdf = newPdf
+            
+            newPhoto.urlPhoto = photoUrl
+            
+            newBook.bookPhoto = newPhoto
+            
+            
         
         for tag in tagsArray{
             
@@ -225,7 +205,24 @@ func loadFromSaveFile (file name: Data) throws -> JSONArray {
         throw HackerBooksErrors.jsonParsingError
     }
     
+}
 
+//MARK: - Download data
+
+func obtainDataWithUrl(Url url: NSURL) throws -> NSData {
+    
+    
+    if let data = try NSData(contentsOf: url as URL){
+        
+        
+        return data
+        
+    } else {
+        
+        
+        throw HackerBooksErrors.jsonParsingError
+        
+    }
     
     
 }

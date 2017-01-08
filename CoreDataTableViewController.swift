@@ -19,11 +19,13 @@ class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
     
     var searchResultsInSearch: Array<Book> = []
 
-    
     var managedObjectContext: NSManagedObjectContext?
     
     @IBOutlet weak var searchBarToolbar: UISearchBar!
    
+    @IBOutlet weak var lastReadButton: UIBarButtonItem!
+        
+    
     
      var searchActive : Bool = false
     
@@ -54,6 +56,17 @@ class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        
+        if UserDefaults.standard.value(forKey: "lastBookRead") == nil {
+            lastReadButton.isEnabled = false
+            
+        } else {
+            
+            
+            lastReadButton.isEnabled = true
+            
+        }
+        
         
         do {
           
@@ -126,10 +139,7 @@ class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
                 return 0
                 
             }
-            
-            
         }
-        
     }
 
     
@@ -162,9 +172,7 @@ class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
         } else{
             
                 return ""
-                
-
-            
+   
         }
     }
     
@@ -182,6 +190,9 @@ class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
         
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CustomTableViewCell
         
+        var dataImage: NSData!
+        
+        
         if  searchActive == false {
             
             if (searchResults.count > 0){
@@ -195,10 +206,6 @@ class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
             
                 let bookPhoto:Photo = bookArray[indexPath.row].bookPhoto!
                 
-                let image: UIImage = UIImage(data: bookPhoto.photoData as! Data)!
-                
-                
-                
                 let authorSet  = bookArray[indexPath.row].bookAuthor
                 
                 var stringAuthor : String = ""
@@ -210,13 +217,53 @@ class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
                     
                 }
                 
+                var image: UIImage!
+                
+                image = UIImage(imageLiteralResourceName: "chibiVader.jpg")
+                
+                
+                cell.imgView.image = image
+                
+                if bookPhoto.photoData != nil {
+                    
+                    image = UIImage(data: bookPhoto.photoData as! Data)!
+                    
+                    cell.imgView.image = image
+                    
+                } else {
+                    
+                    
+                    DispatchQueue.global(qos:.default).async {
+                        
+                        do{
+                            
+                            dataImage = try obtainDataWithUrl(Url:NSURL(string:bookPhoto.urlPhoto!)!)
+                            
+                            
+                            image = UIImage(data: dataImage as Data)!
+                            
+                            bookPhoto.photoData = dataImage
+                            
+                            try self.getActualContext().save()
+                            
+                            DispatchQueue.main.async {
+                                
+                                cell.imgView.image = image
+                            
+                            }
+                            
+                        }catch(let error as NSError){
+                            
+                            print("UPss Error \(error)")
+                            
+                        }
+                        
+                    }
+                    
+                }
                 
                 
                 cell.titleLabelView?.text = title
-                //cell.tagLabelView?.text = stringTag
-                
-                cell.imgView.image = image
-                //cell.imgView.contentMode = .scaleAspectFit
                 
                 cell.authorsLabelView?.text = stringAuthor
                 
@@ -225,7 +272,6 @@ class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
             
             if (searchResultsInSearch.count > 0){
                 
-                //let bookSet = searchResultsInSearch[indexPath.section].tagBook
                 
                 let bookArray = searchResultsInSearch
                 
@@ -234,9 +280,11 @@ class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
                 
                 let bookPhoto:Photo = bookArray[indexPath.row].bookPhoto!
                 
-                let image: UIImage = UIImage(data: bookPhoto.photoData as! Data)!
+                var image: UIImage!
                 
+                image = UIImage(imageLiteralResourceName: "chibiVader.jpg")
                 
+                  cell.imgView.image = image
                 
                 let authorSet  = bookArray[indexPath.row].bookAuthor
                 
@@ -249,13 +297,53 @@ class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
                     
                 }
                 
+                if bookPhoto.photoData != nil {
+                    
+                    image = UIImage(data: bookPhoto.photoData as! Data)!
+                    
+                    cell.imgView.image = image
+                    
+                } else {
+                    
+                    
+                    DispatchQueue.global(qos:.default).async {
+                        
+                        do{
+                            
+                            dataImage = try obtainDataWithUrl(Url:NSURL(string:bookPhoto.urlPhoto!)!)
+                            
+                            
+                            image = UIImage(data: dataImage as Data)!
+                            
+                            bookPhoto.photoData = dataImage
+                            
+                            try self.getActualContext().save()
+                            
+                            DispatchQueue.main.async {
+                                
+                                
+                                
+                                cell.imgView.image = image
+                                
+                                
+                                
+                            }
+                            
+                            
+                            
+                        }catch(let error as NSError){
+                            
+                            print("UPss Error \(error)")
+                            
+                        }
+                        
+                    }
+                    
+                }
+
                 
                 
                 cell.titleLabelView?.text = title
-                //cell.tagLabelView?.text = stringTag
-                
-                cell.imgView.image = image
-                //cell.imgView.contentMode = .scaleAspectFit
                 
                 cell.authorsLabelView?.text = stringAuthor
                 
@@ -293,9 +381,15 @@ class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
             
             fecthRequestSearch.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
             
-            let predicateInSearch = NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+            let predicateInSearchBook = NSPredicate(format: "title CONTAINS[cd] %@", searchText, searchText)
+            let predicateInSearchTag = NSPredicate(format: "ANY bookTag.name CONTAINS[cd] %@", searchText)
+            let predicateInSearchAuthor = NSPredicate(format: "ANY bookAuthor.name CONTAINS[cd] %@", searchText)
+
+            //title CONTAINS[cd] %@ OR
+            let finalPreficate = NSCompoundPredicate.init(orPredicateWithSubpredicates: [predicateInSearchBook,predicateInSearchTag,predicateInSearchAuthor])
             
-            fecthRequestSearch.predicate = predicateInSearch
+            
+            fecthRequestSearch.predicate = finalPreficate
             
             do {
             
@@ -395,6 +489,25 @@ class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
             
         }
         
+        
+        if segue.identifier == "showLastRead" && UserDefaults.standard.value(forKey: "lastBookRead") != nil {
+ 
+            
+            let bookLastRead: DetailBookViewController = segue.destination as! DetailBookViewController
+            let dataBook: NSData = UserDefaults.standard.value(forKey: "lastBookRead") as! NSData
+            
+            let cosas = NSKeyedUnarchiver.unarchiveObject(with: dataBook as Data)
+            
+           let varios = getActualContext().persistentStoreCoordinator?.managedObjectID(forURIRepresentation: cosas as! URL)
+            
+            let bookLast: Book = getActualContext().object(with: varios!) as! Book
+            
+            
+            bookLastRead.bookRecieved = bookLast
+            
+
+            
+        }
         
     }
  

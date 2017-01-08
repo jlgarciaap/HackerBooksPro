@@ -20,7 +20,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIImagePickerContr
     var bookRaceivedinMap: Book!
     
     
-    let initialLocation = CLLocation(latitude: 40.532654, longitude: -3.647416)//ES KeepCoding en Madrid ejejjejeje
+    let initialLocation = CLLocation(latitude: 40.532654, longitude: -3.647416)//Donde sera?
     
     var imagePicker: UIImagePickerController!
     var newAnnotationCreated: Annotations!
@@ -41,7 +41,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIImagePickerContr
         centerMapOnLocation(location: initialLocation)
         
     
-        let alertControllerInitial = UIAlertController(title: "A todos los Padawans", message: "Lo normal seria que el proceso, gracias a la fuerza, seleccionara la ubicacion del usuario y comenzara el proceso de la anotacion, como no es posible en el simulador, pulsa un rato en la ubicacioin que desees y veras como la anotacion tu creas", preferredStyle: UIAlertControllerStyle.alert)
+        let annotationDefault: MKPointAnnotation = MKPointAnnotation()
+        annotationDefault.coordinate.latitude = 40.532654
+        annotationDefault.coordinate.longitude = -3.647416
+        annotationDefault.title = "Keepcoding Jedi Academy"
+        
+        self.mapViewObject.addAnnotation(annotationDefault)
+        
+        let alertControllerInitial = UIAlertController(title: "A todos los Padawans", message: "Lo normal seria que el proceso, gracias a la fuerza, seleccionara la ubicacion del usuario y comenzara el proceso de la anotacion, como no es posible en el simulador, pulsa un rato en la ubicacion que desees y veras como la anotacion/es tu creas. ", preferredStyle: UIAlertControllerStyle.alert)
         
         
          alertControllerInitial.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
@@ -138,8 +145,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIImagePickerContr
                 
             
             })
-           // alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default,handler: nil))
-            
             
             let alertController2 = UIAlertController(title: "Imagen para la anotacion", message: "", preferredStyle: UIAlertControllerStyle.alert)
             
@@ -198,7 +203,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, UIImagePickerContr
         }
         
         //Si no tiene foto usamos otra
-        var imageTest: UIImage = UIImage(named: "chibiVader.jpg")!
+        var imageTest: UIImage = UIImage(named: "academy.jpg")!
         
         let annotationsBook = bookRaceivedinMap.bookAnnotations
         

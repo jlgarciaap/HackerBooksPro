@@ -3,8 +3,8 @@
     <entity name="Annotations" representedClassName=".Annotations" syncable="YES">
         <attribute name="annotationPhoto" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="annotationString" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" indexed="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" indexed="YES" syncable="YES"/>
         <relationship name="annotationBook" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="bookAnnotations" inverseEntity="Book" syncable="YES"/>
     </entity>
     <entity name="Author" representedClassName=".Author" syncable="YES">
@@ -20,25 +20,25 @@
         <relationship name="bookTag" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="tagBook" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <entity name="Pdf" representedClassName=".Pdf" syncable="YES">
-        <attribute name="pdfData" attributeType="Binary" syncable="YES"/>
+        <attribute name="pdfData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="urlPdf" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="pdfBook" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="bookPdf" inverseEntity="Book" syncable="YES"/>
     </entity>
     <entity name="Photo" representedClassName=".Photo" syncable="YES">
         <attribute name="photoData" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="urlPhoto" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="urlPhoto" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="photoBook" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="bookPhoto" inverseEntity="Book" syncable="YES"/>
     </entity>
     <entity name="Tag" representedClassName=".Tag" syncable="YES">
-        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="tagBook" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="bookTag" inverseEntity="Book" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Annotations" positionX="9" positionY="99" width="128" height="144"/>
         <element name="Author" positionX="9" positionY="81" width="128" height="75"/>
         <element name="Book" positionX="-18" positionY="27" width="128" height="163"/>
-        <element name="Pdf" positionX="27" positionY="99" width="128" height="90"/>
-        <element name="Photo" positionX="18" positionY="90" width="128" height="90"/>
-        <element name="Tag" positionX="36" positionY="90" width="128" height="75"/>
-        <element name="Annotations" positionX="9" positionY="99" width="128" height="144"/>
+        <element name="Pdf" positionX="27" positionY="99" width="128" height="106"/>
+        <element name="Photo" positionX="18" positionY="90" width="128" height="106"/>
+        <element name="Tag" positionX="36" positionY="90" width="128" height="87"/>
     </elements>
 </model>
