@@ -43,5 +43,9 @@
 	<string>Solicitando el uso de la camara</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Solicitando el uso de la localizacion</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Solicitando acceso a Fotos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Solicitando acceso a Fotos</string>
 </dict>
 </plist>

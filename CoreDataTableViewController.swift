@@ -9,14 +9,23 @@
 import UIKit
 import CoreData
 
-class CoreDataTableViewController: UITableViewController {
+class CoreDataTableViewController: UITableViewController, UISearchBarDelegate {
     
     let fecthRequest: NSFetchRequest<Tag> = Tag.fetchRequest()
 
     var searchResults: Array<Tag> = []
     
+    let fecthRequestSearch: NSFetchRequest<Book> = Book.fetchRequest()
+    
+    var searchResultsInSearch: Array<Book> = []
+
+    
     var managedObjectContext: NSManagedObjectContext?
     
+    @IBOutlet weak var searchBarToolbar: UISearchBar!
+   
+    
+     var searchActive : Bool = false
     
     func getActualContext() -> NSManagedObjectContext {//Con esta funcion obtenemos el contexto
         
@@ -37,6 +46,8 @@ class CoreDataTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        searchBarToolbar.delegate = self
+
         managedObjectContext = getActualContext()
         
     }
@@ -45,14 +56,13 @@ class CoreDataTableViewController: UITableViewController {
         super.viewDidAppear(true)
         
         do {
-           // let predicado = NSPredicate(format: "title = %@", "Eloquent JavaScript")
-            
-           // fecthRequest.predicate = predicado
+          
             
             fecthRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
             
             searchResults =  try getActualContext().fetch(fecthRequest)
             tableView.reloadData()
+            
         } catch let error as NSError {
             print("El error es: \(error)")
         }
@@ -78,13 +88,15 @@ class CoreDataTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of sections
         
         //Poner todo con tag para la secciones
-        if (searchResults.count > 0)
-        {
-            
-            return searchResults.count
-            
-        }
         
+        if (searchActive == false ){
+            if (searchResults.count > 0)
+            {
+                
+                return searchResults.count
+                
+            }
+        }
         
         return 1
     }
@@ -92,35 +104,68 @@ class CoreDataTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         
-        
-        
-        if searchResults.count > 0 {
-        
-        return (searchResults[section].tagBook?.count)!
-        
+        if (searchActive == false ){
+            
+            if searchResults.count > 0 {
+                
+                return (searchResults[section].tagBook?.count)!
+                
+            } else {
+                
+                return 0
+                
+            }
         } else {
             
-            return 0
+            if searchResultsInSearch.count > 0 {
+                
+                return searchResultsInSearch.count
+                
+            } else {
+                
+                return 0
+                
+            }
+            
             
         }
         
+    }
+
     
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        
+        if (searchActive == false ){
+            
+            return 40.0
+        }
+        
+        return 0
+        
     }
 
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        
-        if searchResults.count > 0 {
+        if  searchActive == false {
             
-            return searchResults[section].name
+            if searchResults.count > 0 {
+                
+                return searchResults[section].name
+                
+            } else {
+                
+                return ""
+                
+            }
+        } else{
             
-        } else {
+                return ""
+                
 
-            return ""
             
         }
-        
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -133,92 +178,147 @@ class CoreDataTableViewController: UITableViewController {
         
     }
     
-    //Para la celda seleccionada ponemos el tamaño de la celda
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        
-//        return 172.0
-//    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: CustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CustomTableViewCell
-
-   /* Cuando es Books
-        if (searchResults.count > 0) {
-            
-            let title = searchResults[indexPath.row].title
-            
-            let tagSet  = searchResults[indexPath.row].bookTag
-            
-            var stringTag : String = ""
-            
-            for tag in tagSet! {
-                
-                stringTag += (tag as! Tag).name! + ","
-                
-                
-            }
-            
- 
- */
-           //let authorArray : Array<String> = authorSet?.allObjects as! Array<String>
-            
-           // let author:String = "Autor de prueba"//authorArray.joined(separator: ",")
         
-        
-        if (searchResults.count > 0){
+        if  searchActive == false {
             
-            let bookSet = searchResults[indexPath.section].tagBook
-            
-            let bookArray = bookSet?.allObjects as! Array<Book>
-            
-            let title = bookArray[indexPath.row].title
-            
-            let tagSet  = bookArray[indexPath.row].bookTag
-            
-            var stringTag : String = ""
-            
-            for tag in tagSet! {
+            if (searchResults.count > 0){
                 
-                stringTag += (tag as! Tag).name! + ","
+                let bookSet = searchResults[indexPath.section].tagBook
+                
+                let bookArray = bookSet?.allObjects as! Array<Book>
+                
+                let title = bookArray[indexPath.row].title
+            
+            
+                let bookPhoto:Photo = bookArray[indexPath.row].bookPhoto!
+                
+                let image: UIImage = UIImage(data: bookPhoto.photoData as! Data)!
+                
+                
+                
+                let authorSet  = bookArray[indexPath.row].bookAuthor
+                
+                var stringAuthor : String = ""
+                
+                for author in authorSet! {
+                    
+                    stringAuthor += (author as! Author).name! + ","
+                    
+                    
+                }
+                
+                
+                
+                cell.titleLabelView?.text = title
+                //cell.tagLabelView?.text = stringTag
+                
+                cell.imgView.image = image
+                //cell.imgView.contentMode = .scaleAspectFit
+                
+                cell.authorsLabelView?.text = stringAuthor
+                
+            }
+        }else {
+            
+            if (searchResultsInSearch.count > 0){
+                
+                //let bookSet = searchResultsInSearch[indexPath.section].tagBook
+                
+                let bookArray = searchResultsInSearch
+                
+                let title = bookArray[indexPath.row].title
+
+                
+                let bookPhoto:Photo = bookArray[indexPath.row].bookPhoto!
+                
+                let image: UIImage = UIImage(data: bookPhoto.photoData as! Data)!
+                
+                
+                
+                let authorSet  = bookArray[indexPath.row].bookAuthor
+                
+                var stringAuthor : String = ""
+                
+                for author in authorSet! {
+                    
+                    stringAuthor += (author as! Author).name! + ","
+                    
+                    
+                }
+                
+                
+                
+                cell.titleLabelView?.text = title
+                //cell.tagLabelView?.text = stringTag
+                
+                cell.imgView.image = image
+                //cell.imgView.contentMode = .scaleAspectFit
+                
+                cell.authorsLabelView?.text = stringAuthor
                 
                 
             }
             
-            let bookPhoto:Photo = bookArray[indexPath.row].bookPhoto!
             
-            let image: UIImage = UIImage(data: bookPhoto.photoData as! Data)!
-            
-            
-            
-            let authorSet  = bookArray[indexPath.row].bookAuthor
-            
-            var stringAuthor : String = ""
-            
-            for author in authorSet! {
-                
-                stringAuthor += (author as! Author).name! + ","
-                
-                
-            }
-
-            
-                
-            cell.titleLabelView?.text = title
-            cell.tagLabelView?.text = stringTag
-            
-            cell.imgView.image = image
-            //cell.imgView.contentMode = .scaleAspectFit
-            
-            cell.authorsLabelView?.text = stringAuthor
-
         }
-        
         
         return cell
     }
     
-
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchActive = true;
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText.characters.count > 2 {
+            
+            searchActive = true;
+            
+            fecthRequestSearch.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+            
+            let predicateInSearch = NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+            
+            fecthRequestSearch.predicate = predicateInSearch
+            
+            do {
+            
+            searchResultsInSearch =  try getActualContext().fetch(fecthRequestSearch)
+            
+            }catch (let e as NSError){
+                
+                print("Ups error: \(e)")
+                
+            }
+            
+        } else {
+            
+            searchActive = false;
+            
+        }
+        
+        
+        self.tableView.reloadData()
+        
+        
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -263,15 +363,29 @@ class CoreDataTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+           let selectedBook: Book!
+        
         if segue.identifier == "showBook" {
             
             var indexpath:IndexPath = self.tableView.indexPathForSelectedRow!
             
-            let bookSet = searchResults[indexpath.section].tagBook
+            if searchActive == false {
+                
+                let bookSet = searchResults[indexpath.section].tagBook
+                
+                let bookArray = bookSet?.allObjects as! Array<Book>
+                
+                selectedBook = bookArray[indexpath.row]
+                
+            } else {
+                
+                let bookArray = searchResultsInSearch
+                
+                selectedBook = bookArray[indexpath.row]
+
+                
+            }
             
-            let bookArray = bookSet?.allObjects as! Array<Book>
-            
-            let selectedBook: Book = bookArray[indexpath.row]
             
             let bookDetail: DetailBookViewController = segue.destination as! DetailBookViewController
             

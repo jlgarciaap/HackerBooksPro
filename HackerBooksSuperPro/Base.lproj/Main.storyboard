@@ -18,9 +18,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="rIV-8m-IQ6">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CustomCell" rowHeight="125" id="XGX-HU-8gE" customClass="CustomTableViewCell" customModule="HackerBooksSuperPro" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="125"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="125"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XGX-HU-8gE" id="q3m-tM-Vft">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="125"/>
@@ -61,6 +66,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="HackerBooksPro" id="O3c-Bf-emn"/>
+                    <connections>
+                        <outlet property="searchBarToolbar" destination="rIV-8m-IQ6" id="ESR-sV-biy"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SoM-jU-zZO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -185,7 +193,7 @@
                     <navigationItem key="navigationItem" title="Title" id="DYw-p2-KRo">
                         <barButtonItem key="rightBarButtonItem" title="Anotaciones" id="0u2-ZD-Dmx">
                             <connections>
-                                <segue destination="Fgk-RI-xEo" kind="show" id="u3Y-qo-Q2O"/>
+                                <segue destination="Fgk-RI-xEo" kind="show" identifier="notesMapView" id="u3Y-qo-Q2O"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -213,19 +221,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="u5V-Ed-saI">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="u5V-Ed-saI">
                                 <rect key="frame" x="0.0" y="60" width="375" height="563"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="375" id="eAs-wo-h5a"/>
-                                    <constraint firstAttribute="height" constant="563" id="gnz-kb-rMn"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="RvY-RI-tao">
-                                <rect key="frame" x="86" y="631" width="196" height="29"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="196" id="LTh-NJ-cUC"/>
-                                    <constraint firstAttribute="height" constant="28" id="rm5-V7-Oh9"/>
-                                </constraints>
+                                <rect key="frame" x="49" y="631" width="280" height="29"/>
                                 <segments>
                                     <segment title="Standard"/>
                                     <segment title="Satellite"/>
@@ -238,20 +239,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="u5V-Ed-saI" firstAttribute="centerX" secondItem="D4N-R4-AZb" secondAttribute="centerX" id="DZ8-ec-XWY"/>
-                            <constraint firstItem="RvY-RI-tao" firstAttribute="centerX" secondItem="D4N-R4-AZb" secondAttribute="centerX" constant="-3.5" id="Ef1-rJ-oyO"/>
-                            <constraint firstItem="u5V-Ed-saI" firstAttribute="centerY" secondItem="D4N-R4-AZb" secondAttribute="centerY" constant="8" id="Ms4-dI-PNu"/>
-                            <constraint firstItem="RvY-RI-tao" firstAttribute="centerY" secondItem="D4N-R4-AZb" secondAttribute="centerY" constant="311.5" id="UHs-bC-8cl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="RvY-RI-tao" secondAttribute="trailing" constant="30" id="IfF-28-Jyz"/>
+                            <constraint firstItem="RvY-RI-tao" firstAttribute="leading" secondItem="D4N-R4-AZb" secondAttribute="leadingMargin" constant="33" id="Ktr-az-QPH"/>
+                            <constraint firstItem="VKe-D7-68d" firstAttribute="top" secondItem="RvY-RI-tao" secondAttribute="bottom" constant="8" id="wB5-7s-27f"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="mapView" destination="u5V-Ed-saI" id="tIN-FR-k2a"/>
+                        <outlet property="mapViewObject" destination="u5V-Ed-saI" id="d3i-Na-8Qt"/>
                         <outlet property="selectView" destination="RvY-RI-tao" id="c5K-xt-Ir2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Wi-lZ-Lvn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4345" y="397"/>
+            <point key="canvasLocation" x="4344.8000000000002" y="396.25187406296857"/>
         </scene>
         <!--Pdf View Controller-->
         <scene sceneID="slR-Dr-TFO">

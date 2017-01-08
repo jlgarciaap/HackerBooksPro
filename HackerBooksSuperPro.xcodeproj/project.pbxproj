@@ -15,6 +15,8 @@
 		866A07D31E1D2C36009991BA /* CoreDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866A07D21E1D2C36009991BA /* CoreDataTableViewController.swift */; };
 		8685BE0B1E200BB80081FCE7 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8685BE0A1E200BB80081FCE7 /* MapViewController.swift */; };
 		8685BE0D1E2020540081FCE7 /* chibiVader.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8685BE0C1E2020540081FCE7 /* chibiVader.jpg */; };
+		86DAE2091E21162B00445FFE /* Annotations+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DAE2071E21162B00445FFE /* Annotations+CoreDataClass.swift */; };
+		86DAE20A1E21162B00445FFE /* Annotations+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DAE2081E21162B00445FFE /* Annotations+CoreDataProperties.swift */; };
 		86E574DD1E1ED346003BC8D3 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E574DC1E1ED346003BC8D3 /* CustomTableViewCell.swift */; };
 		86E574DF1E1EDEF2003BC8D3 /* DetailBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E574DE1E1EDEF2003BC8D3 /* DetailBookViewController.swift */; };
 		86E574E11E1EE70E003BC8D3 /* PdfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E574E01E1EE70E003BC8D3 /* PdfViewController.swift */; };
@@ -44,6 +46,8 @@
 		866A07D21E1D2C36009991BA /* CoreDataTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTableViewController.swift; sourceTree = "<group>"; };
 		8685BE0A1E200BB80081FCE7 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = HackerBooksSuperPro/MapViewController.swift; sourceTree = "<group>"; };
 		8685BE0C1E2020540081FCE7 /* chibiVader.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = chibiVader.jpg; sourceTree = "<group>"; };
+		86DAE2071E21162B00445FFE /* Annotations+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Annotations+CoreDataClass.swift"; sourceTree = "<group>"; };
+		86DAE2081E21162B00445FFE /* Annotations+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Annotations+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		86E574DC1E1ED346003BC8D3 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		86E574DE1E1EDEF2003BC8D3 /* DetailBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailBookViewController.swift; sourceTree = "<group>"; };
 		86E574E01E1EE70E003BC8D3 /* PdfViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PdfViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +93,7 @@
 		866A07CB1E1CFB06009991BA /* Machine */ = {
 			isa = PBXGroup;
 			children = (
+				86DAE2081E21162B00445FFE /* Annotations+CoreDataProperties.swift */,
 				F4490ED01E1C604A0002BD45 /* Author+CoreDataProperties.swift */,
 				866A07D01E1D031B009991BA /* Book+CoreDataProperties.swift */,
 				F4490ED21E1C604A0002BD45 /* Pdf+CoreDataProperties.swift */,
@@ -101,6 +106,7 @@
 		866A07CC1E1CFB12009991BA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				86DAE2071E21162B00445FFE /* Annotations+CoreDataClass.swift */,
 				F4490ECF1E1C604A0002BD45 /* Author+CoreDataClass.swift */,
 				F4490ED11E1C604A0002BD45 /* Pdf+CoreDataClass.swift */,
 				F4490ED31E1C604A0002BD45 /* Photo+CoreDataClass.swift */,
@@ -241,12 +247,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86DAE2091E21162B00445FFE /* Annotations+CoreDataClass.swift in Sources */,
 				86E574DD1E1ED346003BC8D3 /* CustomTableViewCell.swift in Sources */,
 				866A07D11E1D031B009991BA /* Book+CoreDataProperties.swift in Sources */,
 				F4490ED81E1C604A0002BD45 /* Pdf+CoreDataProperties.swift in Sources */,
 				F4490EDA1E1C604A0002BD45 /* Photo+CoreDataProperties.swift in Sources */,
 				866A07CE1E1CFB63009991BA /* Foundation.swift in Sources */,
 				F4490EBB1E1C5EAC0002BD45 /* HackerBooksSuperPro.xcdatamodeld in Sources */,
+				86DAE20A1E21162B00445FFE /* Annotations+CoreDataProperties.swift in Sources */,
 				F4490ECC1E1C5F1C0002BD45 /* Tag+CoreDataProperties.swift in Sources */,
 				F4490ED61E1C604A0002BD45 /* Author+CoreDataProperties.swift in Sources */,
 				866A07C71E1CFAE1009991BA /* JSONparsing.swift in Sources */,

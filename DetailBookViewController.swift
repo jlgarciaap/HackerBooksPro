@@ -152,11 +152,6 @@ class DetailBookViewController: UIViewController {
         
         if switchState.isOn{
             
-         //   let notif = Notification(name: Notification.Name(rawValue: "favChangedOn"), object: self, userInfo: ["key": model])
-            
-           // nCenter.post(notif)
-            
-           // model.tags = model.tags! + ", \(keyFavorites)"
             
             if searchResultsTag.count > 0 {
                 let existTag :Tag = searchResultsTag[0]
@@ -172,16 +167,11 @@ class DetailBookViewController: UIViewController {
             }
             
             
-            
+            miDelegate.saveContext()
             tagsLblView.text = tagsLblView.text! + "Favorites"
             
         } else {
             
-//            let notif = Notification(name: Notification.Name(rawValue: "favChangedOff"), object: self, userInfo: ["key": model])
-//            
-//            nCenter.post(notif)
-//            
-//            model.tags = model.tags?.replacingOccurrences(of: ", \(keyFavorites)", with: "")
             
             if searchResultsTag.count > 0 {
                 let existTag :Tag = searchResultsTag[0]
@@ -192,7 +182,7 @@ class DetailBookViewController: UIViewController {
                     
                     objectContext.delete(existTag)
                     
-                    
+                    miDelegate.saveContext()
                 }
                 
                 
@@ -204,7 +194,6 @@ class DetailBookViewController: UIViewController {
             
         }
         
-       // syncModelWithView()
         
         
     }
@@ -231,6 +220,18 @@ class DetailBookViewController: UIViewController {
             
             pdfDetail.pdfRecieved = selectedPDF
             
+            
+            
+        }
+        
+        if segue.identifier == "notesMapView" {
+
+            let selectedBook = bookRecieved
+            
+            let mapViewNotes: MapViewController = segue.destination as! MapViewController
+            
+            
+            mapViewNotes.bookRaceivedinMap = selectedBook
             
             
         }
